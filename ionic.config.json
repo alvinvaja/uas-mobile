@@ -1,0 +1,7 @@
+{
+  "name": "uas-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
