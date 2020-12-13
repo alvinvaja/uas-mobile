@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class LoginPage implements OnInit {
   constructor(
     private authSrv: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -46,6 +48,8 @@ export class LoginPage implements OnInit {
       .then(res => {
         console.log(res);
         this.errorMessage = '';
+        this.presentToast();
+        localStorage.setItem('email', value.email);
       }, err => {
         this.errorMessage = err.message;
       });
@@ -53,5 +57,14 @@ export class LoginPage implements OnInit {
 
   goToRegisterPage() {
     this.router.navigateByUrl('/register');
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Login Successful!',
+      duration: 1000
+    });
+
+    await toast.present();
   }
 }

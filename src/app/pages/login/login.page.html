@@ -34,7 +34,8 @@
             </ng-container>
           </div>
       
-          <ion-button expand="block" class="submit-btn" type="submit" [disabled]="!validations_form.valid" style="margin-top: 12px">Log In</ion-button>
+          <div style="font-size: 14px; margin-top: 12px;">Don't have account? Register <a (click)="goToRegisterPage()">here</a>!</div>
+          <ion-button expand="block" class="submit-btn" type="submit" [disabled]="!validations_form.valid" style="margin-top: 8px; text-transform: none !important;">Login</ion-button>
       
           <label class="error-message">{{errorMessage}}</label>
         </form>
