@@ -22,6 +22,9 @@ export class RegisterPage implements OnInit {
     lastname: [
       { type: 'required', message: 'Last name is required.'}
     ],
+    nim: [
+      { type: 'required', message: 'NIM is required'}
+    ],
     email: [
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Enter a valid email.' }
@@ -59,6 +62,9 @@ export class RegisterPage implements OnInit {
       lastname: new FormControl('', Validators.compose([
         Validators.required
       ])),
+      nim: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
       confirmpassword: new FormControl('', Validators.compose([
         Validators.required
       ]))
@@ -84,12 +90,16 @@ export class RegisterPage implements OnInit {
 
   addNewUser(value) {
     const name = value.firstname + ' ' + value.lastname;
+    const nim = value.nim;
     const email = value.email;
-    const lat = 0, long = 0, photo = '../../../assets/icon/avatar.svg';
+    const lat = 0;
+    const long = 0;
+    const photo = '../../../assets/icon/avatar.svg';
 
-    this.db.collection("users").add({
+    this.db.collection('users').add({
       name: name,
       email: email,
+      nim: nim,
       lat: lat,
       long: long,
       photo: photo

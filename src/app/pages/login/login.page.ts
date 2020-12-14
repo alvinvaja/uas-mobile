@@ -28,7 +28,11 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private toastCtrl: ToastController
-  ) { }
+  ) {
+    if (localStorage.getItem('email')) {
+      router.navigateByUrl('tabs/map');
+    }
+  }
 
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
@@ -50,6 +54,7 @@ export class LoginPage implements OnInit {
         this.errorMessage = '';
         this.presentToast();
         localStorage.setItem('email', value.email);
+        this.router.navigateByUrl('tabs/map');
       }, err => {
         this.errorMessage = err.message;
       });
