@@ -3,7 +3,10 @@
     <ion-row>
       <p style="margin: 8px; font-size: 24px;">Friends</p>
       <ion-col size="10" offset="1">
-        <div *ngFor="let friend of friends" class="friendSection">
+        <div class="search_box">
+          <input type="text"[(ngModel)]="searchQuery" placeholder="e.g. John Thor" [formControl]="formControl" />
+        </div>
+        <div *ngFor="let friend of friends | appFilter: searchQuery" class="friendSection">
           <div class="user">
             <div style="display: flex; align-items: center;">
               <ion-avatar style="width: 40px;  height: 40px;">
