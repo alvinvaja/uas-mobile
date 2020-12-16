@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) {
+    if (localStorage.getItem('email') === null) {
+      router.navigateByUrl('login');
+    }
+  }
 
   ngOnInit() {
   }

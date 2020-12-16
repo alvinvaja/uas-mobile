@@ -36,7 +36,11 @@ export class ProfilePage implements OnInit {
     private db: AngularFirestore,
     private loadCtrl: LoadingController,
     private quoteService: QuoteService
-  ) { }
+  ) {
+    if (localStorage.getItem('email') === null) {
+      router.navigateByUrl('login');
+    }
+  }
 
   ngOnInit() {
     this.currentEmail = localStorage.getItem('email') !== null ? localStorage.getItem('email') : '';

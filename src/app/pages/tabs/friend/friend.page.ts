@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { map, take, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-friend',
@@ -20,8 +21,13 @@ export class FriendPage implements OnInit {
 
   constructor(
     private userService: UserService,
-    private db: AngularFirestore
-  ) { }
+    private db: AngularFirestore,
+    private router: Router
+  ) {
+    if (localStorage.getItem('email') === null) {
+      router.navigateByUrl('login');
+    }
+  }
 
   ngOnInit() {
     this.friends = [];
