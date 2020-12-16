@@ -113,7 +113,7 @@ export class QuoteService {
   constructor() { }
 
   getRandomQuote() {
-    const size = this.quotes.length;
+    const size = this.quotes.length - 1;
     const key = Math.floor(Math.random() * (size + 1));
 
     return this.quotes[key];

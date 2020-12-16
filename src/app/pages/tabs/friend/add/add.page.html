@@ -1,0 +1,31 @@
+<ion-content>
+  <ion-grid style="padding: 8px">
+    <ion-row>
+      <div style="display: flex; justify-content: flex-start; align-items: center; margin-top: 8px; width: 100%;">
+        <ion-icon (click)="goBack()" name="arrow-back-outline" size="large"></ion-icon>
+        <p style="font-size: 24px; margin: 8px">Add Friend</p>
+      </div>
+      <ion-col size="10" offset="1">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="search_box">
+            <input type="text"[(ngModel)]="searchQuery" placeholder="e.g. 123" />
+          </div>
+          <ion-button size="small" color="secondary" (click)="searchFriend()" style="text-transform: none !important; margin-left: 16px;">Search</ion-button>
+        </div>
+        <div *ngIf="found && firstSearch" class="user">
+          <ion-avatar style="width: 100px; height: 100px;">
+            <img src="{{ userSearch.photo }}" />
+          </ion-avatar>
+          <p style="margin-top: 16px; font-weight: 500;">{{ userSearch.name }}</p>
+          <p *ngIf="isFriend" style="margin-top: 8px; color: #555">{{ userSearch.name }} is already your friend.</p>
+          <p *ngIf="isSelf" style="margin-top: 8px; color: #555">You can't add yourself as a friend.</p>
+          <ion-button *ngIf="!isFriend && !isSelf" size="small" color="primary" (click)="addFriend()" style="text-transform: none !important; margin-top: 8px; width: 100px;">Add</ion-button>
+          <ion-button *ngIf="isFriend || isSelf" size="small" color="primary" disabled style="text-transform: none !important; margin-top: 8px; width: 100px;">Add</ion-button>
+        </div>
+        <div *ngIf="!found && firstSearch" style="display: flex; justify-content: center; font-size: 20px; color: red; margin-top: 32px;">
+          User Not Found!
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

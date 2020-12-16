@@ -6,6 +6,8 @@ import { map, take, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-friend',
@@ -23,7 +25,8 @@ export class FriendPage implements OnInit {
   constructor(
     private userService: UserService,
     private db: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private alertCtrl: AlertController
   ) {
     if (localStorage.getItem('email') === null) {
       router.navigateByUrl('login');
@@ -56,7 +59,7 @@ export class FriendPage implements OnInit {
             })
           );
 
-          dataFriend.pipe(take(1)).subscribe(friendID => {
+          dataFriend.subscribe(friendID => {
             const listID = [];
             friendID.forEach(idFriend => {
               listID.push(idFriend.id);
@@ -68,5 +71,69 @@ export class FriendPage implements OnInit {
         }
       });
     });
+  }
+
+  goToAddPage() {
+    this.router.navigateByUrl('tabs/friend/add');
+  }
+
+  deleteFriend(friend: User) {
+    this.presentAlert(friend);
+  }
+
+  delete(friend: User) {
+    const currentID = this.user.id;
+    const targetID = friend.id;
+
+    this.db.collection('users').doc(currentID).collection('friends').snapshotChanges().pipe(
+      map((actions) => {
+        return actions.map((a) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data();
+          return { id, data };
+        });
+      })
+    ).pipe(take(1)).subscribe(res => {
+      res.forEach(teman => {
+        if (teman.data.id === targetID) {
+          this.db.collection('users').doc(currentID).collection('friends').doc(teman.id).delete();
+        }
+      });
+    });
+
+    this.db.collection('users').doc(targetID).collection('friends').snapshotChanges().pipe(
+      map((actions) => {
+        return actions.map((a) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data();
+          return { id, data };
+        });
+      })
+    ).pipe(take(1)).subscribe(res => {
+      res.forEach(teman => {
+        if (teman.data.id === currentID) {
+          this.db.collection('users').doc(targetID).collection('friends').doc(teman.id).delete();
+        }
+      });
+    });
+  }
+
+  async presentAlert(friend: User) {
+    const alert = await this.alertCtrl.create({
+      message: 'Do you want to delete ' + friend.name + ' from your frient list?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.delete(friend);
+          }
+        },
+        {
+          text: 'No'
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

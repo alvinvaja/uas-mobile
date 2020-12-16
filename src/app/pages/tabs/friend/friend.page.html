@@ -1,7 +1,10 @@
 <ion-content>
   <ion-grid style="padding: 8px">
     <ion-row>
-      <p style="margin: 8px; font-size: 24px;">Friends</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; width: 100%;">
+        <p style="font-size: 24px; margin: 8px">Friends</p>
+        <ion-icon (click)="goToAddPage()" style="margin-right: 8px;" name="person-add-outline" size="large"></ion-icon>
+      </div>
       <ion-col size="10" offset="1">
         <div class="search_box">
           <input type="text"[(ngModel)]="searchQuery" placeholder="e.g. John Thor" [formControl]="formControl" />
@@ -14,6 +17,7 @@
               </ion-avatar>
               <ion-label style="margin-left: 20px">{{ friend.name }}</ion-label>
             </div>
+            <ion-icon (click)="deleteFriend(friend)" name="trash-outline" size="large" style="color: red"></ion-icon>
           </div>
         </div>
       </ion-col>
