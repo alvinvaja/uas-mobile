@@ -40,6 +40,10 @@ export class ProfilePage implements OnInit {
     if (localStorage.getItem('email') === null) {
       router.navigateByUrl('login');
     }
+
+    setInterval(() => {
+      this.currentEmail = localStorage.getItem('email') !== null ? localStorage.getItem('email') : '';
+    }, 200);
   }
 
   ngOnInit() {
