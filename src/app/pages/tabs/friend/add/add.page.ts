@@ -5,7 +5,6 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { map } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-add',
