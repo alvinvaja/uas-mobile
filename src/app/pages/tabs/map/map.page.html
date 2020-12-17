@@ -1,5 +1,11 @@
 <ion-content style="width: 100%; height: 100%;">
   <div class="map" id="map" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-end;">
-    <ion-button class="btnCheckIn" size="small" (click)="checkIn()" style="text-transform: none !important; margin-bottom: 16px;" color="primary">Check-In Location</ion-button>
+    <div style="display: flex; justify-content: center;">
+      <ion-button class="btnCheckIn" size="small" (click)="checkIn()" style="text-transform: none !important; margin-bottom: 16px;" color="primary">Check-In Location</ion-button>
+      <ion-button size="small" (click)="goToCenter()" style="text-transform: none !important; margin-bottom: 16px; margin-left: 16px; z-index: 10;" color="primary">
+        <ion-icon name="location-outline"></ion-icon>
+        Center
+      </ion-button>
+    </div>
   </div>
 </ion-content>

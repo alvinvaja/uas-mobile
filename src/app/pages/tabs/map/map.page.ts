@@ -117,6 +117,14 @@ export class MapPage implements OnInit {
     });
   }
 
+  goToCenter() {
+    navigator.geolocation.getCurrentPosition(pos => {
+      this.map.flyTo({
+        center: [pos.coords.longitude, pos.coords.latitude]
+      });
+    });
+  }
+
   async presentToast() {
     const toast = await this.toastCtrl.create({
       message: 'Your current location is updated',
