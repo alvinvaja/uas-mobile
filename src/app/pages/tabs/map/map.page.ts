@@ -49,6 +49,9 @@ export class MapPage implements OnInit {
     this.currentEmail = '';
     this.users = this.friends = [];
     this.currentUser = { id: '', name: '', nim: '', email: '', lat: 0, long: 0, photo: '../../../assets/icon/avatar.svg'};
+  }
+
+  ionViewWillEnter() {
     this.userService.getAllUsers().pipe(take(1)).subscribe(res => {
       this.users = res;
       res.forEach(data => {
@@ -68,6 +71,8 @@ export class MapPage implements OnInit {
           const marker = new mapboxgl.Marker({
             color: '#000000'
           }).setLngLat([this.currentUser.long, this.currentUser.lat]).addTo(this.map);
+
+          const popup = new mapboxgl.Popup().setLngLat([this.currentUser.long, this.currentUser.lat]).setText('You').addTo(this.map);
 
           const idUser = this.currentUser.id;
           const dataFriend = this.db.collection('users').doc(idUser).collection('friends').snapshotChanges().pipe(
@@ -92,6 +97,9 @@ export class MapPage implements OnInit {
               const markerFriend = new mapboxgl.Marker({
                 color: '#FF0000'
               }).setLngLat([temen.long, temen.lat]).addTo(this.map);
+
+              const popupFriend = new mapboxgl.Popup().setLngLat([temen.long, temen.lat]).
+                setText(temen.name).addTo(this.map);
             });
           });
         }

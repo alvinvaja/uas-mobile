@@ -76,7 +76,7 @@ export class ProfilePage implements OnInit {
     reader.onload = () => {
       this.photo = reader.result.toString();
 
-      const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.photo);
+      const url = this.sanitizer.sanitize(SecurityContext.URL, this.photo);
       const imgBlob = this.convertDataUrltoBlob(url);
       const imgName = this.getRandomString();
 

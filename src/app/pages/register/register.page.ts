@@ -89,20 +89,22 @@ export class RegisterPage implements OnInit {
   }
 
   addNewUser(value) {
-    const name = value.firstname + ' ' + value.lastname;
-    const nim = value.nim;
-    const email = value.email;
-    const lat = 0;
-    const long = 0;
-    const photo = '../../../assets/icon/avatar.svg';
+    navigator.geolocation.getCurrentPosition(pos => {
+      const name = value.firstname + ' ' + value.lastname;
+      const nim = value.nim;
+      const email = value.email;
+      const lat = pos.coords.latitude;
+      const long = pos.coords.longitude;
+      const photo = '../../../assets/icon/avatar.svg';
 
-    this.db.collection('users').add({
-      name: name,
-      email: email,
-      nim: nim,
-      lat: lat,
-      long: long,
-      photo: photo
+      this.db.collection('users').add({
+        name: name,
+        email: email,
+        nim: nim,
+        lat: lat,
+        long: long,
+        photo: photo
+      });
     });
   }
 
